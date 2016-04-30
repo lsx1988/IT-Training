@@ -4,12 +4,19 @@ import java.lang.Math;
 
 public class PlayerManager{
 	
+	private final int numOfPlayers=100;
+	private final int numOfRanking=10;
+	
 	/*Announce a ArrayList type to store multiple player objects*/
-	public ArrayList<Player> playerList;
+	private ArrayList<Player> playerList;
 	
 	/*Create an object of type ArrayList*/
 	PlayerManager(){
 		this.playerList=new ArrayList<Player>();
+	}
+	
+	public ArrayList<Player> getPlayerList(){
+		return playerList;
 	}
 /*-----------------------------------------------------------*/		
 	/*Whether add player or not is based on the condition of playerList*/
@@ -27,7 +34,7 @@ public class PlayerManager{
 			return;
 		}
 		
-		if(playerList.size()>100){
+		if(playerList.size()>numOfPlayers){
 			return;	
 		}
 		
@@ -150,9 +157,30 @@ public class PlayerManager{
 	public void displayRanking(){
 		Collections.sort(playerList,Player.multiComparator);
 		System.out.println(" WIN  | DRAW | GAME | USERNAME");
-		for(int i=0;i<=playerList.size()-1&&i<=9;i++){
-			
+		for(int i=0;i<=playerList.size()-1&&i<=numOfRanking-1;i++){
+			int winRate=(int)Math.round(playerList.get(i).getWinRate());
+			int drawRate=(int)Math.round(playerList.get(i).getDrawRate());
+			int gamesPlayed=playerList.get(i).getNumOfGamesPlayed();
+			String userName=playerList.get(i).getUserName();
+			System.out.printf(" %3d%% | %3d%% | %2d   | %s",winRate,drawRate,gamesPlayed,userName);
+			System.out.println();
 		}
 	}
-
+/*-----------------------------------------------------------*/
+	public int checkPlayer(String[] parameter){
+		String playerOName=parameter[0];
+		String playerXName=parameter[1];
+		int playerExist=0;
+		for(Player pl: playerList){
+			if(pl.getUserName()==playerOName||pl.getUserName()==playerXName){
+				playerExist++;
+			}
+		}
+		if(playerExist==2){
+			return playerExist;
+		}else{
+			System.out.println("Player does not exist.");
+			return -1;
+		}
+	}
 }

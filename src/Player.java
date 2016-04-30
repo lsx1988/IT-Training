@@ -71,16 +71,16 @@ public class Player{
 		this.givenName = givenName;
 	}
 
-	public void setNumOfGamesPlayed(int numOfGamesPlayed) {
-		this.numOfGamesPlayed = numOfGamesPlayed;
+	public void setNumOfGamesPlayed() {
+		this.numOfGamesPlayed++;
 	}
 
-	public void setNumOfGamesWon(int numOfGamesWon) {
-		this.numOfGamesWon = numOfGamesWon;
+	public void setNumOfGamesWon() {
+		this.numOfGamesWon++;
 	}
 	
-	public void setNumOfGamesDrawn(int numOfGamesDrawn) {
-		this.numOfGamesDrawn = numOfGamesDrawn;
+	public void setNumOfGamesDrawn() {
+		this.numOfGamesDrawn++;
 	}
 
 	public void setWinRate() {
@@ -91,7 +91,7 @@ public class Player{
 		}
 	}
 
-	public void setDrawRate(double drawRate) {
+	public void setDrawRate() {
 		if(this.numOfGamesPlayed==0){
 			this.drawRate=0;
 		}else{
@@ -105,6 +105,8 @@ public class Player{
 		this.numOfGamesPlayed=0;
 		this.numOfGamesWon=0;
 		this.numOfGamesDrawn=0;
+		this.setWinRate();
+		this.setDrawRate();
 	}
 	
 /*---------Two player comparator used for sorting player per self-defined rules----------------*/
@@ -125,10 +127,10 @@ public class Player{
 				if(p1.getDrawRate()==p2.getDrawRate()){
 					return p1.getUserName().compareTo(p2.getUserName());
 				}else{
-					return Double.compare(p1.getDrawRate(),p2.getDrawRate());
+					return -Double.compare(p1.getDrawRate(),p2.getDrawRate());
 				}
 			}else{
-				return Double.compare(p1.getWinRate(),p2.getWinRate());
+				return -Double.compare(p1.getWinRate(),p2.getWinRate());
 			}
 		}
 	};
@@ -137,7 +139,7 @@ public class Player{
 	
 	public String toString(){
 		return userName+","+familyName+","+givenName+","+numOfGamesPlayed+" games,"
-				+numOfGamesWon+" wons,"+numOfGamesDrawn+" drawns";
+				+numOfGamesWon+" wins,"+numOfGamesDrawn+" draws";
 	}
 	
 	

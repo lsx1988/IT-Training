@@ -3,13 +3,16 @@ import java.util.Scanner;
 
 public class TicTacToe{
 	
-	PlayerManager PM;
-	Interpreter Inp;
+	private PlayerManager PM;
+	private Interpreter Inp;
+	private GameManager GM;
 	public static Scanner keyBoard;
+	int i=0;
 	
 	TicTacToe(){
 		PM=new PlayerManager();
 		Inp=new Interpreter();
+		GM=new GameManager();
 		keyBoard=new Scanner(System.in);
 	}
 	
@@ -45,12 +48,18 @@ public class TicTacToe{
 					PM.displayPlayer(Inp.getParameter(commands));
 				}
 				break;
-			case "ranking":
+			case "rankings":
 				PM.displayRanking();
+				break;
+			case "playgame":
+				GM.setPM(PM);
+				GM.playGame(Inp.getParameter(commands));
 				break;
 			case "exit":
 				System.out.println();
 				System.exit(0);
+			default:
+				break;
 		}
 	}
 
