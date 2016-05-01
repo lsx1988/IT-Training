@@ -4,6 +4,7 @@ import java.lang.Math;
 
 public class PlayerManager{
 	
+	/*The limitation of number of player is 100, the limitation of ranking list is 10*/
 	private final int numOfPlayers=100;
 	private final int numOfRanking=10;
 	
@@ -14,8 +15,8 @@ public class PlayerManager{
 	PlayerManager(){
 		this.playerList=new ArrayList<Player>();
 	}
-/*-----------------------------------------------------------*/		
-	/*Whether add player or not is based on the condition of playerList*/
+
+/*--------Add player function------------------*/
 	public void addPlayer(String[] parameter){
 		
 		//Parameter[] which is interpreted from the commands by Interpreter object
@@ -23,20 +24,23 @@ public class PlayerManager{
 		String familyName=parameter[1];
 		String givenName=parameter[2];
 		
-		//If there is no player, create new player and add player directly
+		//No player, create new player and add player directly
 		if(playerList.isEmpty()){			
 			Player player=new Player(userName, familyName, givenName);
 			playerList.add(player);
 			return;
 		}
 		
+		//If the number of players exceeds 100, return an error
 		if(playerList.size()>numOfPlayers){
+			System.out.println("Error: The num of players can not be over 100");
 			return;	
 		}
 		
-		//If there are players and the total number is less than 100 limitation
-		//check if the username of new player is already exited. If so, show up 
-		//a notification, if not, add new player		
+		/*If there are players and the total number is less than 100 limitation
+		 *check if the username of new player is already exited. If so, show up 
+		 *a notification, if not, create and add new player
+		 */		
 		for(Player pl:playerList){
 			if(pl.getUserName().equals(userName)){
 				System.out.println("The username has been used already.");
@@ -47,15 +51,20 @@ public class PlayerManager{
 		Player player=new Player(userName, familyName, givenName);
 		playerList.add(player);				
 	}
-/*-----------------------------------------------------------*/		
+	
+/*--------Remove specific player function with username-----------------*/
 	public void removePlayer(String[] parameter){
 		
+		//No players, create and error message
 		if(playerList.isEmpty()){
 			System.out.println("The player does not exist.");
 			return;
 		}
 		
-		String useName=parameter[0];		
+		//Search the player based on user name, if the player exists, remove it
+		//if not, create an error message
+		String useName=parameter[0];
+		
 		for(Player pl:playerList){
 			if(pl.getUserName().equals(useName)){
 				playerList.remove(pl);
@@ -64,7 +73,7 @@ public class PlayerManager{
 		}
 		System.out.println("The player does not exist.");	
 	}
-	
+/*-------- Remove all player function ----------------------------------*/	
 	public void removePlayer(){
 		System.out.println("Are you sure you want to remove all players? (y/n)");
 		if(TicTacToe.keyBoard.nextLine().equals("y")){
@@ -73,7 +82,7 @@ public class PlayerManager{
 			return;
 		}
 	}
-/*-----------------------------------------------------------*/		
+/*-------- Edit player function ----------------------------------------*/		
 	public void editPlayer(String[] parameter){
 		
 		//Parameter[] which is interpreted from the commands by Interpreter object
@@ -81,12 +90,14 @@ public class PlayerManager{
 		String familyName=parameter[1];
 		String givenName=parameter[2];
 				
-		//If there is no player
+		//No players, create and error message
 		if(playerList.isEmpty()){			
 			System.out.println("The player does not exist.");
 			return;
 		}
 		
+		//Search the player based on username, if the player exists, re-edit it
+		//if not, create an error message
 		for(Player pl:playerList){
 			if(pl.getUserName().equals(userName)){
 				pl.setFamilyName(familyName);
@@ -96,14 +107,17 @@ public class PlayerManager{
 		}
 		System.out.println("The player does not exist.");			
 	}
-/*-----------------------------------------------------------*/		
+/*-------- Resetstats specific player function with username-------------*/		
 	public void resetStats(String[] parameter){
-	
+		
+		//No players, create and error message
 		if(playerList.isEmpty()){
 			System.out.println("The player does not exist.");
 			return;
 		}
-	
+		
+		//Search the player based on username, if the player exists, reset it
+		//if not, create an error message
 		String useName=parameter[0];		
 		for(Player pl:playerList){
 			if(pl.getUserName().equals(useName)){
@@ -113,7 +127,7 @@ public class PlayerManager{
 		}
 		System.out.println("The player does not exist.");
 	}
-	
+/*-------- Resetstats all player ----------------------------------------*/		
 	public void resetStats(){
 		System.out.println("Are you sure you want to reset all player statistics? (y/n)");
 		if(TicTacToe.keyBoard.nextLine().equals("y")){
@@ -124,14 +138,17 @@ public class PlayerManager{
 			return;
 		}
 	}
-/*-----------------------------------------------------------*/		
+/*-------- Display specific player with usename -------------------------*/		
 	public void displayPlayer(String[] parameter){		
 		
+		//No players, create and error message
 		if(playerList.isEmpty()){
 			System.out.println("The player does not exist.");
 			return;
 		}
-	
+		
+		//Search the player based on username, if the player exists, display it
+		//if not, create an error message
 		String useName=parameter[0];		
 		for(Player pl:playerList){
 			if(pl.getUserName().equals(useName)){				
@@ -141,7 +158,7 @@ public class PlayerManager{
 		}		
 		System.out.println("The player does not exist.");	
 	}
-	
+/*-------- Display all players---------------- -------------------------*/		
 	public void displayPlayer(){
 		Collections.sort(playerList,Player.userNameComparator);
 		for(Player pl:playerList){
@@ -149,10 +166,16 @@ public class PlayerManager{
 		}
 		return;
 	}
-/*-----------------------------------------------------------*/	
+/*---------Ranking all players or top 10 players -----------------------*/	
 	public void displayRanking(){
+		
+		//Sort the players based on rules
 		Collections.sort(playerList,Player.multiComparator);
+		
+		//Print the title
 		System.out.println(" WIN  | DRAW | GAME | USERNAME");
+		
+		//Loop through the players to print out is statics
 		for(int i=0;i<=playerList.size()-1&&i<=numOfRanking-1;i++){
 			int winRate=(int)Math.round(playerList.get(i).getWinRate());
 			int drawRate=(int)Math.round(playerList.get(i).getDrawRate());
@@ -162,20 +185,19 @@ public class PlayerManager{
 			System.out.println();
 		}
 	}
-/*-----------------------------------------------------------*/
-	public void assignPlayerToGM(String[] parameter, GameManager GM){
+/*---------Find out and assign two players to GameManager --------------*/
+	public void assignPlayerToGM(String[] parameter, GameManager gm){
 		
 		String playerOName=parameter[0];
 		String playerXName=parameter[1];
 		
 		for(Player pl: playerList){
 			if(pl.getUserName().equals(playerOName)){
-				GM.setPlayerO(pl);
+				gm.setPlayerO(pl);
 			}
 			if(pl.getUserName().equals(playerXName)){
-				GM.setPlayerX(pl);
+				gm.setPlayerX(pl);
 			}
 		}
 	}
-/*-----------------------------------------------------------*/
 }

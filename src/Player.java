@@ -141,6 +141,4 @@ public class Player{
 		return userName+","+familyName+","+givenName+","+numOfGamesPlayed+" games,"
 				+numOfGamesWon+" wins,"+numOfGamesDrawn+" draws";
 	}
-	
-	
 }

@@ -136,17 +136,25 @@ public class GameManager {
 	}	
 		
 	// Check winner in combination of row/column/diagonal/draw models
-	private boolean getGameState(){		
+	private boolean getGameState(){
+		
 		if(checkInRow()||checkInColumn()||checkInDiagonal()){
+			
 			System.out.println("Game over. "+currentPlayer().getGivenName()+" won!");
+			
+			//when there is a winner, update the player statics
 			playerO.setNumOfGamesPlayed();
 			playerX.setNumOfGamesPlayed();
 			currentPlayer().setNumOfGamesWon();
 			currentPlayer().setWinRate();
 			currentPlayer().setDrawRate();
 			return true;
+			
 		}else if(checkInDraw()==true){
+			
 			System.out.println("Game over. It was a draw");
+			
+			//when there is a draw, update the player statics
 			playerO.setNumOfGamesPlayed();
 			playerX.setNumOfGamesPlayed();
 			currentPlayer().setNumOfGamesDrawn();

@@ -1,58 +1,62 @@
 import java.util.Scanner;
 
-
 public class TicTacToe{
 	
-	private PlayerManager PM;
-	private Interpreter Inp;
-	private GameManager GM;
+	/*TicTacToe contains one PlayerManager, one GamePlayer, one Interpreter, one keyboard which is 
+	 *responsible for handing the game operation
+	 */
+	private PlayerManager pm;
+	private Interpreter inp;
+	private GameManager gm;
 	public static Scanner keyBoard;
 	
+	/*When an object of TicTacToe is created, it will create the following objects*/
 	TicTacToe(){
-		PM=new PlayerManager();
-		Inp=new Interpreter();
-		GM=new GameManager();
+		pm=new PlayerManager();
+		inp=new Interpreter();
+		gm=new GameManager();
 		keyBoard=new Scanner(System.in);
 	}
 	
+	/*Run different function based on the input commands*/
 	public void chooseFunction(){
 		
 		String commands=keyBoard.nextLine();
 		
-		switch(Inp.getFunctionName(commands)){
+		switch(inp.getFunctionName(commands)){
 			case "addplayer":
-				PM.addPlayer(Inp.getParameter(commands));
+				pm.addPlayer(inp.getParameter(commands));
 				break;
 			case "removeplayer":
-				if(Inp.getParameter(commands)==null){
-					PM.removePlayer();
+				if(inp.getParameter(commands)==null){
+					pm.removePlayer();
 				}else{
-					PM.removePlayer(Inp.getParameter(commands));
+					pm.removePlayer(inp.getParameter(commands));
 				}
 				break;
 			case "editplayer":
-				PM.editPlayer(Inp.getParameter(commands));
+				pm.editPlayer(inp.getParameter(commands));
 				break;
 			case "resetstats":
-				if(Inp.getParameter(commands)==null){
-					PM.resetStats();
+				if(inp.getParameter(commands)==null){
+					pm.resetStats();
 				}else{
-					PM.resetStats(Inp.getParameter(commands));
+					pm.resetStats(inp.getParameter(commands));
 				}
 				break;
 			case "displayplayer":
-				if(Inp.getParameter(commands)==null){
-					PM.displayPlayer();
+				if(inp.getParameter(commands)==null){
+					pm.displayPlayer();
 				}else{
-					PM.displayPlayer(Inp.getParameter(commands));
+					pm.displayPlayer(inp.getParameter(commands));
 				}
 				break;
 			case "rankings":
-				PM.displayRanking();
+				pm.displayRanking();
 				break;
 			case "playgame":
-				PM.assignPlayerToGM(Inp.getParameter(commands),GM);
-				GM.playGame();
+				pm.assignPlayerToGM(inp.getParameter(commands),gm);
+				gm.playGame();
 				break;
 			case "exit":
 				System.out.println();
@@ -61,16 +65,17 @@ public class TicTacToe{
 				break;
 		}
 	}
-
-	public void run(){	
-		
+	
+	/*Running method TicTacToe game system*/
+	public void run(){		
 		System.out.println("Welcome to Tic Tac Toe!");
 		do{
 			System.out.printf("\n>");
 			chooseFunction();
 		}while(true);		
 	}
-
+	
+	/*Start running TicTacToe game system*/
 	public static void main(String[] args){
 		TicTacToe gameSystem = new TicTacToe();
 		gameSystem.run();		
