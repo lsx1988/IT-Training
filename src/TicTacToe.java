@@ -7,7 +7,6 @@ public class TicTacToe{
 	private Interpreter Inp;
 	private GameManager GM;
 	public static Scanner keyBoard;
-	int i=0;
 	
 	TicTacToe(){
 		PM=new PlayerManager();
@@ -52,8 +51,8 @@ public class TicTacToe{
 				PM.displayRanking();
 				break;
 			case "playgame":
-				GM.setPM(PM);
-				GM.playGame(Inp.getParameter(commands));
+				PM.assignPlayerToGM(Inp.getParameter(commands),GM);
+				GM.playGame();
 				break;
 			case "exit":
 				System.out.println();

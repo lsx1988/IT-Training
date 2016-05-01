@@ -14,10 +14,6 @@ public class PlayerManager{
 	PlayerManager(){
 		this.playerList=new ArrayList<Player>();
 	}
-	
-	public ArrayList<Player> getPlayerList(){
-		return playerList;
-	}
 /*-----------------------------------------------------------*/		
 	/*Whether add player or not is based on the condition of playerList*/
 	public void addPlayer(String[] parameter){
@@ -167,20 +163,19 @@ public class PlayerManager{
 		}
 	}
 /*-----------------------------------------------------------*/
-	public int checkPlayer(String[] parameter){
+	public void assignPlayerToGM(String[] parameter, GameManager GM){
+		
 		String playerOName=parameter[0];
 		String playerXName=parameter[1];
-		int playerExist=0;
+		
 		for(Player pl: playerList){
-			if(pl.getUserName()==playerOName||pl.getUserName()==playerXName){
-				playerExist++;
+			if(pl.getUserName().equals(playerOName)){
+				GM.setPlayerO(pl);
+			}
+			if(pl.getUserName().equals(playerXName)){
+				GM.setPlayerX(pl);
 			}
 		}
-		if(playerExist==2){
-			return playerExist;
-		}else{
-			System.out.println("Player does not exist.");
-			return -1;
-		}
 	}
+/*-----------------------------------------------------------*/
 }

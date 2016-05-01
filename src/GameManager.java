@@ -4,7 +4,6 @@ public class GameManager {
 	
 	private char[][] grid;
 	private char currentSymbol;
-	private PlayerManager PM;
 	private Player playerO;
 	private Player playerX;
 	
@@ -15,15 +14,19 @@ public class GameManager {
 		grid=new char[3][3];
 	}
 	
-	public void setPM(PlayerManager PM){
-		this.PM=PM;
+	public void setPlayerO(Player playerO){
+		this.playerO=playerO;
+	}
+	
+	public void setPlayerX(Player playerX){
+		this.playerX=playerX;
 	}
 		
-	public void playGame(String[] parameter){
+	public void playGame(){
 		
 		boolean isInputValid;
 		
-		if(isPlayerExist(parameter)==false){
+		if(playerO==null||playerX==null){
 			System.out.println("Player does not exist.");
 			return;
 		}
@@ -69,6 +72,9 @@ public class GameManager {
 			switchToNextPlayer();
 				
 		}while(getGameState()==false);
+		
+		playerO=null;
+		playerX=null;
 	}
 		
 	//Set the grid with blank elements
@@ -193,30 +199,5 @@ public class GameManager {
 			}
 		}
 		return draw;
-	}
-	
-	public boolean isPlayerExist(String[] parameter){
-		
-		this.playerO=null;
-		this.playerX=null;
-
-		String playerOName=parameter[0];
-		String playerXName=parameter[1];
-		
-		for(Player pl: PM.getPlayerList()){
-			if(pl.getUserName().equals(playerOName)){
-				this.playerO=pl;
-			}
-			if(pl.getUserName().equals(playerXName)){
-				this.playerX=pl;
-			}
-		}
-		if(playerO==null||playerX==null){
-			return false;
-		}else{
-			return true;
-		}
-		
-		
 	}
 }
