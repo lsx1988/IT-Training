@@ -2,18 +2,21 @@ import java.util.ArrayList;
 
 public class GameManager {
 	
+/*private properties, especially contains to players who will attend the game*/
 	private char[][] grid;
 	private char currentSymbol;
 	private Player playerO;
 	private Player playerX;
 	
+/*when an object is created, the following instances are initialized*/	
 	GameManager(){
 		playerO=null;
 		playerX=null;
 		currentSymbol='O';
 		grid=new char[3][3];
 	}
-	
+
+/*Set method to assign a player as playerO*/
 	public void setPlayerO(Player playerO){
 		this.playerO=playerO;
 	}
@@ -21,11 +24,14 @@ public class GameManager {
 	public void setPlayerX(Player playerX){
 		this.playerX=playerX;
 	}
-		
+
+/*Start a game operation*/
 	public void playGame(){
 		
+		//Flag used for checking the input validation
 		boolean isInputValid;
 		
+		//If the two assigned players are not available, sent an error message
 		if(playerO==null||playerX==null){
 			System.out.println("Player does not exist.");
 			return;
@@ -39,27 +45,34 @@ public class GameManager {
 		printGrid();
 			
 			
-		/* Repeat below code for placing symbol and checking winner/draw*/
+		//Repeat below code for placing symbol and checking winner/draw
 		do{			
+			
+			//Check player O input validation
 			do{
 				System.out.println(playerO.getGivenName()+"'s move:");
 				isInputValid=putSymbolInGrid(TicTacToe.keyBoard.nextInt(),TicTacToe.keyBoard.nextInt());
 			}while(isInputValid==false);
-
+			
+			//print out the current grid
 			printGrid();
 			
+			//Is there a winner or draw?
 			if(getGameState()==true){
 				TicTacToe.keyBoard.nextLine();
 				break;
 			}
 			
+			//If no winner or draw, switch to next Player X
 			switchToNextPlayer();
 			
+			//Check player X input validation
 			do{
 				System.out.println(playerX.getGivenName()+"'s move:");
 				isInputValid=putSymbolInGrid(TicTacToe.keyBoard.nextInt(),TicTacToe.keyBoard.nextInt());
 			}while(isInputValid==false);
-					
+			
+			//print out the current grid
 			printGrid();
 			
 			//Is there a winner or draw?
@@ -73,6 +86,7 @@ public class GameManager {
 				
 		}while(getGameState()==false);
 		
+		//When game is over, reset the player O and X as null
 		playerO=null;
 		playerX=null;
 	}
@@ -88,12 +102,18 @@ public class GameManager {
 		
 	//Put currentSymbol in grid specified by player's move data
 	private boolean putSymbolInGrid(int row,int column){
+		
+		//if input exceeds the range, sent an error message
 		if(row<0||row>2||column<0||column>2){
 			System.out.println("Invalid move. You must place at a cell within {0,1,2} {0,1,2}.");
 			return false;
+		
+		//if input equals to a occupied space, sent an error message
 		}else if(grid[row][column]!=' '){
 				System.out.println("Invalid move. The cell has been occupied.");
 				return false;
+				
+		//No error, put the symbol		
 		}else{
 			grid[row][column]=currentSymbol;
 			return true;
