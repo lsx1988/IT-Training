@@ -1,3 +1,4 @@
+/* Pro B_S1_2016, Made by Shixun Liu, ID:766799*/
 import java.util.Scanner;
 
 public class TicTacToe{
@@ -5,58 +6,58 @@ public class TicTacToe{
 	/*TicTacToe contains one PlayerManager, one GamePlayer, one Interpreter, one keyboard which is 
 	 *responsible for handing the game operation
 	 */
-	private PlayerManager pm;
-	private Interpreter inp;
-	private GameManager gm;
+	private PlayerManager playerMgr;
+	private Interpreter interp;
+	private GameManager gameMgr;
 	public static Scanner keyBoard;
 	
 	/*When an object of TicTacToe is created, it will create the following objects*/
 	TicTacToe(){
-		pm=new PlayerManager();
-		inp=new Interpreter();
-		gm=new GameManager();
+		playerMgr=new PlayerManager();
+		interp=new Interpreter();
+		gameMgr=new GameManager();
 		keyBoard=new Scanner(System.in);
 	}
 	
-	/*Run different function based on the input commands*/
+	/*Run different function based on the interput commands*/
 	public void chooseFunction(){
 		
 		String commands=keyBoard.nextLine();
 		
-		switch(inp.getFunctionName(commands)){
+		switch(interp.getFunctionName(commands)){
 			case "addplayer":
-				pm.addPlayer(inp.getParameter(commands));
+				playerMgr.addPlayer(interp.getParameter(commands));
 				break;
 			case "removeplayer":
-				if(inp.getParameter(commands)==null){
-					pm.removePlayer();
+				if(interp.getParameter(commands)==null){
+					playerMgr.removePlayer();
 				}else{
-					pm.removePlayer(inp.getParameter(commands));
+					playerMgr.removePlayer(interp.getParameter(commands));
 				}
 				break;
 			case "editplayer":
-				pm.editPlayer(inp.getParameter(commands));
+				playerMgr.editPlayer(interp.getParameter(commands));
 				break;
 			case "resetstats":
-				if(inp.getParameter(commands)==null){
-					pm.resetStats();
+				if(interp.getParameter(commands)==null){
+					playerMgr.resetStats();
 				}else{
-					pm.resetStats(inp.getParameter(commands));
+					playerMgr.resetStats(interp.getParameter(commands));
 				}
 				break;
 			case "displayplayer":
-				if(inp.getParameter(commands)==null){
-					pm.displayPlayer();
+				if(interp.getParameter(commands)==null){
+					playerMgr.displayPlayer();
 				}else{
-					pm.displayPlayer(inp.getParameter(commands));
+					playerMgr.displayPlayer(interp.getParameter(commands));
 				}
 				break;
 			case "rankings":
-				pm.displayRanking();
+				playerMgr.displayRanking();
 				break;
 			case "playgame":
-				pm.assignPlayerToGM(inp.getParameter(commands),gm);
-				gm.playGame();
+				playerMgr.assignPlayerToGM(interp.getParameter(commands),gameMgr);
+				gameMgr.playGame();
 				break;
 			case "exit":
 				System.out.println();

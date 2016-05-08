@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 public class GameManager {
 	
 /*private properties, especially contains to players who will attend the game*/

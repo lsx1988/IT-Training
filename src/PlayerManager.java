@@ -5,8 +5,8 @@ import java.lang.Math;
 public class PlayerManager{
 	
 	/*The limitation of number of player is 100, the limitation of ranking list is 10*/
-	private final int numOfPlayers=100;
-	private final int numOfRanking=10;
+	private final int PLAYER_LIMIT=100;
+	private final int RANKING_LIMIT=10;
 	
 	/*Announce a ArrayList type to store multiple player objects*/
 	private ArrayList<Player> playerList;
@@ -32,7 +32,7 @@ public class PlayerManager{
 		}
 		
 		//If the number of players exceeds 100, return an error
-		if(playerList.size()>numOfPlayers){
+		if(playerList.size()>PLAYER_LIMIT){
 			System.out.println("Error: The num of players can not be over 100");
 			return;	
 		}
@@ -77,7 +77,7 @@ public class PlayerManager{
 	public void removePlayer(){
 		System.out.println("Are you sure you want to remove all players? (y/n)");
 		if(TicTacToe.keyBoard.nextLine().equals("y")){
-				playerList.clear();
+			playerList.clear();		
 		}else{
 			return;
 		}
@@ -176,7 +176,7 @@ public class PlayerManager{
 		System.out.println(" WIN  | DRAW | GAME | USERNAME");
 		
 		//Loop through the players to print out is statics
-		for(int i=0;i<=playerList.size()-1&&i<=numOfRanking-1;i++){
+		for(int i=0;i<=playerList.size()-1&&i<=RANKING_LIMIT-1;i++){
 			int winRate=(int)Math.round(playerList.get(i).getWinRate());
 			int drawRate=(int)Math.round(playerList.get(i).getDrawRate());
 			int gamesPlayed=playerList.get(i).getNumOfGamesPlayed();
@@ -186,17 +186,17 @@ public class PlayerManager{
 		}
 	}
 /*---------Find out and assign two players to GameManager --------------*/
-	public void assignPlayerToGM(String[] parameter, GameManager gm){
+	public void assignPlayerToGM(String[] parameter, GameManager gameMgr){
 		
 		String playerOName=parameter[0];
 		String playerXName=parameter[1];
 		
 		for(Player pl: playerList){
 			if(pl.getUserName().equals(playerOName)){
-				gm.setPlayerO(pl);
+				gameMgr.setPlayerO(pl);
 			}
 			if(pl.getUserName().equals(playerXName)){
-				gm.setPlayerX(pl);
+				gameMgr.setPlayerX(pl);
 			}
 		}
 	}
